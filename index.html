@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   </head>
   <body class="antialiased bg-[#0f1419] text-white overflow-x-hidden font-['Inter']">
+    <!-- Cursor Animation Canvas -->
+    <canvas id="cursor-canvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0"></canvas>
+    
     <!-- Navigation -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-[#0f1419]/95 backdrop-blur-sm border-b border-white/5">
       <div class="max-w-7xl mx-auto px-6 lg:px-12">
@@ -26,9 +29,19 @@
             <a href="#services" class="text-sm font-medium text-slate-400 hover:text-white transition-colors duration-300">Skills</a>
             <a href="#projects" class="text-sm font-medium text-slate-400 hover:text-white transition-colors duration-300">Projects</a>
           </div>
-          <button class="md:hidden p-2 rounded-lg hover:bg-white/5 transition-colors" id="mobile-menu-button">
+          <button class="md:hidden p-2 rounded-lg hover:bg-white/5 transition-colors fixed right-6 top-6 z-50" id="mobile-menu-button">
             <i class="fas fa-bars text-xl text-slate-300"></i>
           </button>
+        </div>
+      </div>
+      
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="md:hidden hidden bg-[#0f1419] border-t border-white/5">
+        <div class="px-6 py-4 space-y-3">
+          <a href="#home" class="block py-3 text-sm font-medium text-slate-400 hover:text-white transition-colors">Home</a>
+          <a href="#about" class="block py-3 text-sm font-medium text-slate-400 hover:text-white transition-colors">About</a>
+          <a href="#services" class="block py-3 text-sm font-medium text-slate-400 hover:text-white transition-colors">Skills</a>
+          <a href="#projects" class="block py-3 text-sm font-medium text-slate-400 hover:text-white transition-colors">Projects</a>
         </div>
       </div>
     </nav>
@@ -36,31 +49,10 @@
     <!-- Hero Section -->
     <section id="home" class="relative min-h-screen flex items-center overflow-hidden pt-20">
       <div class="max-w-7xl mx-auto px-6 lg:px-12 w-full">
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
-          <!-- Left Content -->
-          <div class="space-y-6 fade-in-section">
-            <div class="space-y-5">
-              <h1 class="text-4xl lg:text-5xl xl:text-6xl font-bold font-['Poppins'] leading-snug">
-                <span id="typing-heading"></span>
-              </h1>
-              
-              <p class="text-base text-slate-400 max-w-xl leading-relaxed text-justify">
-                I'm a UI/UX Designer & Front end and backend Developer specializing in creating beautiful, functional digital experiences. I develop web applications, mobile apps, and desktop systems.
-              </p>
-              
-              <!-- Scan Me Button -->
-              <div class="pt-4">
-                <button id="qr-button" class="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-blue-500/50 hover:scale-105 transition-all duration-300">
-                  <i class="fas fa-qrcode text-xl"></i>
-                  <span>Scan My Resume</span>
-                </button>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Right - Image Placeholder -->
-          <div class="fade-in-section hidden lg:flex justify-end pr-8">
-            <div class="relative w-full max-w-xs">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          <!-- Right - Image (shows first on mobile, second on desktop) -->
+          <div class="fade-in-section flex justify-center lg:justify-end lg:pr-8 order-1 lg:order-2">
+            <div class="relative w-64 max-w-xs sm:w-80 lg:w-full">
               <!-- Rotating background square -->
               <div class="absolute inset-0 bg-gradient-to-br from-blue-500 via-purple-500 to-cyan-500 rounded-2xl opacity-30 animate-spin-slow" style="animation: spin 20s linear infinite;"></div>
               
@@ -73,58 +65,79 @@
               </div>
             </div>
           </div>
+          
+          <!-- Left Content (shows second on mobile, first on desktop) -->
+          <div class="space-y-6 fade-in-section order-2 lg:order-1">
+            <div class="space-y-5">
+              <h1 class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold font-['Poppins'] leading-snug">
+                <span id="typing-heading"></span>
+              </h1>
+              
+              <p class="text-sm sm:text-base text-slate-400 max-w-xl leading-relaxed text-left sm:text-justify">
+                I'm a UI/UX Designer & Front end and backend Developer specializing in creating beautiful, functional digital experiences. I develop web applications, mobile apps, and desktop systems.
+              </p>
+              
+              <!-- Scan Me Button -->
+              <div class="pt-4">
+                <button id="qr-button" class="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-blue-500/50 hover:scale-105 transition-all duration-300 w-full sm:w-auto justify-center">
+                  <i class="fas fa-qrcode text-xl"></i>
+                  <span>Scan My Resume</span>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- About / Why Hire Me Section -->
-    <section id="about" class="relative py-24 bg-[#1a1f28]">
+    <section id="about" class="relative py-16 sm:py-20 lg:py-24 bg-[#1a1f28]">
       <div class="max-w-7xl mx-auto px-6 lg:px-12">
-        <div class="grid lg:grid-cols-2 gap-12 items-start">
+        <div class="grid grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-12 items-start">
           <!-- Left - About Me -->
           <div class="space-y-6 fade-in-section">
-            <h2 class="text-4xl lg:text-5xl font-bold font-['Poppins'] leading-tight">
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold font-['Poppins'] leading-tight">
               About <span class="text-blue-500">Me</span>
             </h2>
             
-            <p class="text-lg text-slate-400 leading-relaxed text-justify">
+            <p class="text-sm sm:text-base lg:text-lg text-slate-400 leading-relaxed text-left sm:text-justify">
               I'm Kent Zorel B. Elnas, a 22-year-old UI/UX Designer and Full Stack Developer based in Tibanga, Iligan City. Currently pursuing my Bachelor of Science in Information Technology at St. Peter's College, I combine academic knowledge with practical experience to create innovative digital solutions.
             </p>
             
-            <p class="text-lg text-slate-400 leading-relaxed text-justify">
+            <p class="text-sm sm:text-base lg:text-lg text-slate-400 leading-relaxed text-left sm:text-justify">
               My passion lies in transforming complex ideas into elegant, user-friendly interfaces that resonate with target audiences. I thrive on challenges and continuously seek opportunities to expand my skill set, staying current with the latest technologies and design trends to deliver cutting-edge solutions.
             </p>
             
             <div class="pt-4">
-              <h3 class="text-xl font-bold text-white mb-4">Skills</h3>
-              <div class="flex flex-wrap gap-3">
-                <button class="skill-badge px-4 py-2 bg-blue-500/10 text-blue-400 rounded-lg text-sm font-medium border border-blue-500/20 hover:bg-blue-500/20 transition-all duration-200 cursor-pointer">UI/UX Design</button>
-                <button class="skill-badge px-4 py-2 bg-purple-500/10 text-purple-400 rounded-lg text-sm font-medium border border-purple-500/20 hover:bg-purple-500/20 transition-all duration-200 cursor-pointer">Graphic Design</button>
-                <button class="skill-badge px-4 py-2 bg-cyan-500/10 text-cyan-400 rounded-lg text-sm font-medium border border-cyan-500/20 hover:bg-cyan-500/20 transition-all duration-200 cursor-pointer">Full Stack Development</button>
-                <button class="skill-badge px-4 py-2 bg-green-500/10 text-green-400 rounded-lg text-sm font-medium border border-green-500/20 hover:bg-green-500/20 transition-all duration-200 cursor-pointer">Strong Work Ethic</button>
-                <button class="skill-badge px-4 py-2 bg-orange-500/10 text-orange-400 rounded-lg text-sm font-medium border border-orange-500/20 hover:bg-orange-500/20 transition-all duration-200 cursor-pointer">Work Under Pressure</button>
-                <button class="skill-badge px-4 py-2 bg-pink-500/10 text-pink-400 rounded-lg text-sm font-medium border border-pink-500/20 hover:bg-pink-500/20 transition-all duration-200 cursor-pointer">Time Management</button>
+              <h3 class="text-lg sm:text-xl font-bold text-white mb-4">Skills</h3>
+              <div class="flex flex-wrap gap-2 sm:gap-3">
+                <button class="skill-badge px-3 py-1.5 sm:px-4 sm:py-2 bg-blue-500/10 text-blue-400 rounded-lg text-xs sm:text-sm font-medium border border-blue-500/20 hover:bg-blue-500/20 transition-all duration-200 cursor-pointer">UI/UX Design</button>
+                <button class="skill-badge px-3 py-1.5 sm:px-4 sm:py-2 bg-purple-500/10 text-purple-400 rounded-lg text-xs sm:text-sm font-medium border border-purple-500/20 hover:bg-purple-500/20 transition-all duration-200 cursor-pointer">Graphic Design</button>
+                <button class="skill-badge px-3 py-1.5 sm:px-4 sm:py-2 bg-cyan-500/10 text-cyan-400 rounded-lg text-xs sm:text-sm font-medium border border-cyan-500/20 hover:bg-cyan-500/20 transition-all duration-200 cursor-pointer">Full Stack Development</button>
+                <button class="skill-badge px-3 py-1.5 sm:px-4 sm:py-2 bg-green-500/10 text-green-400 rounded-lg text-xs sm:text-sm font-medium border border-green-500/20 hover:bg-green-500/20 transition-all duration-200 cursor-pointer">Strong Work Ethic</button>
+                <button class="skill-badge px-3 py-1.5 sm:px-4 sm:py-2 bg-orange-500/10 text-orange-400 rounded-lg text-xs sm:text-sm font-medium border border-orange-500/20 hover:bg-orange-500/20 transition-all duration-200 cursor-pointer">Work Under Pressure</button>
+                <button class="skill-badge px-3 py-1.5 sm:px-4 sm:py-2 bg-pink-500/10 text-pink-400 rounded-lg text-xs sm:text-sm font-medium border border-pink-500/20 hover:bg-pink-500/20 transition-all duration-200 cursor-pointer">Time Management</button>
               </div>
             </div>
           </div>
           
           <!-- Right Content -->
           <div class="space-y-6 fade-in-section">
-            <h2 class="text-4xl lg:text-5xl font-bold font-['Poppins'] leading-tight">
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold font-['Poppins'] leading-tight">
               Why Hire Me For Your<br/>
               <span class="text-blue-500">Next Project?</span>
             </h2>
             
-            <p class="text-lg text-slate-400 leading-relaxed text-justify">
+            <p class="text-sm sm:text-base lg:text-lg text-slate-400 leading-relaxed text-left sm:text-justify">
               I bring a unique blend of design thinking and technical expertise to every project. With a focus on user experience and clean code, I create digital solutions that not only look great but perform exceptionally.
             </p>
             
-            <p class="text-lg text-slate-400 leading-relaxed text-justify">
+            <p class="text-sm sm:text-base lg:text-lg text-slate-400 leading-relaxed text-left sm:text-justify">
               My approach combines thorough research, iterative design, and agile development to deliver products that exceed expectations. I'm committed to understanding your business goals and translating them into effective digital experiences.
             </p>
             
             <div class="pt-6">
-              <a href="#contact" class="inline-block px-8 py-3.5 bg-blue-500 text-white rounded-md font-semibold hover:bg-blue-600 transition-all duration-300">
+              <a href="#contact" class="inline-block px-8 py-3.5 bg-blue-500 text-white rounded-md font-semibold hover:bg-blue-600 transition-all duration-300 w-full sm:w-auto text-center">
                 Get Started
               </a>
             </div>
@@ -134,27 +147,27 @@
     </section>
 
     <!-- My Skills Section -->
-    <section id="services" class="relative py-24 bg-[#0f1419]">
+    <section id="services" class="relative py-16 sm:py-20 lg:py-24 bg-[#0f1419]">
       <div class="max-w-7xl mx-auto px-6 lg:px-12">
         <!-- Section Header -->
-        <div class="text-center mb-16 fade-in-section">
-          <h2 class="text-4xl lg:text-5xl font-bold font-['Poppins'] mb-4">
+        <div class="text-center mb-12 lg:mb-16 fade-in-section">
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold font-['Poppins'] mb-4">
             Languages I <span class="text-blue-500">Specialize</span>
           </h2>
-          <p class="text-lg text-slate-400 max-w-2xl mx-auto">
+          <p class="text-sm sm:text-base lg:text-lg text-slate-400 max-w-2xl mx-auto px-4">
             Technologies and tools I use to build amazing digital products
           </p>
         </div>
 
         <!-- Skills Grid -->
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           <!-- UI/UX Design -->
           <div class="fade-in-section group">
-            <div class="bg-[#1a1f28] border border-white/5 rounded-xl p-8 hover:border-blue-500/30 transition-all duration-300">
-              <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                <i class="fas fa-paint-brush text-white text-2xl"></i>
+            <div class="bg-[#1a1f28] border border-white/5 rounded-xl p-6 sm:p-8 hover:border-blue-500/30 transition-all duration-300">
+              <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
+                <i class="fas fa-paint-brush text-white text-xl sm:text-2xl"></i>
               </div>
-              <h3 class="text-xl font-bold text-white mb-3">UI/UX Design</h3>
+              <h3 class="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3">UI/UX Design</h3>
               <p class="text-slate-400 leading-relaxed text-justify">
                 Creating beautiful and intuitive user interfaces with Figma. Focused on user experience and modern design principles.
               </p>
@@ -230,11 +243,11 @@
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="relative py-24 bg-[#1a1f28]">
+    <section id="projects" class="relative py-16 sm:py-20 lg:py-24 bg-[#1a1f28]">
       <div class="max-w-7xl mx-auto px-6 lg:px-12">
         <!-- Section Header -->
-        <div class="text-center mb-16 fade-in-section">
-          <h2 class="text-4xl lg:text-5xl font-bold font-['Poppins'] mb-4">
+        <div class="text-center mb-12 lg:mb-16 fade-in-section">
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold font-['Poppins'] mb-4">
             My <span class="text-blue-500">Projects</span>
           </h2>
           <p class="text-lg text-slate-400 max-w-2xl mx-auto">
@@ -243,7 +256,7 @@
         </div>
 
         <!-- Projects Grid -->
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           <!-- Project 1 -->
           <div class="fade-in-section group">
             <div class="bg-[#0f1419] border border-white/5 rounded-xl overflow-hidden hover:border-blue-500/30 transition-all duration-300">
@@ -469,37 +482,37 @@
     <!-- Footer -->
     <footer class="bg-[#0a0d12] border-t border-white/5 py-8">
       <div class="max-w-7xl mx-auto px-6 lg:px-12">
-        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-          <p class="text-slate-400 text-sm">&copy; 2026 Kent Zorel B. Elnas. All rights reserved.</p>
-          <p class="text-slate-500 text-sm">Designed & Built with <span class="text-blue-400">❤</span> by Kent</p>
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+          <p class="text-slate-400 text-xs sm:text-sm">&copy; 2026 Kent Zorel B. Elnas. All rights reserved.</p>
+          <p class="text-slate-500 text-xs sm:text-sm">Designed & Built with <span class="text-blue-400">❤</span> by Kent</p>
         </div>
       </div>
     </footer>
 
     <!-- QR Code Modal -->
-    <div id="qr-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm">
-      <div class="relative bg-[#1a1f28] border border-white/10 rounded-2xl p-8 max-w-md mx-4">
-        <button id="close-qr" class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-colors">
-          <i class="fas fa-times text-xl"></i>
+    <div id="qr-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+      <div class="relative bg-[#1a1f28] border border-white/10 rounded-2xl p-6 sm:p-8 max-w-md w-full mx-4">
+        <button id="close-qr" class="absolute top-3 right-3 sm:top-4 sm:right-4 w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-colors">
+          <i class="fas fa-times text-lg sm:text-xl"></i>
         </button>
         
-        <div class="text-center space-y-6">
-          <h3 class="text-2xl font-bold text-white">Scan My Resume</h3>
-          <p class="text-slate-400">Scan this QR code to view or download my resume</p>
+        <div class="text-center space-y-4 sm:space-y-6">
+          <h3 class="text-xl sm:text-2xl font-bold text-white">Scan My Resume</h3>
+          <p class="text-sm sm:text-base text-slate-400">Scan this QR code to view or download my resume</p>
           
-          <div class="bg-white p-6 rounded-xl">
+          <div class="bg-white p-4 sm:p-6 rounded-xl">
             <!-- Replace '/qr-code.png' with your actual QR code image path -->
-            <img src="/image/qr-code.png" alt="Resume QR Code" class="w-64 h-64 mx-auto" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <div class="w-64 h-64 mx-auto hidden items-center justify-center bg-slate-100">
-              <div class="text-center">
-                <i class="fas fa-qrcode text-6xl text-slate-400 mb-4"></i>
-                <p class="text-slate-600 text-sm">Add your QR code image<br/>to /public/qr-code.png</p>
+            <img src="/image/qr-code.png" alt="Resume QR Code" class="w-48 h-48 sm:w-64 sm:h-64 mx-auto" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="w-48 h-48 sm:w-64 sm:h-64 mx-auto hidden items-center justify-center bg-slate-100">
+              <div class="text-center px-4">
+                <i class="fas fa-qrcode text-4xl sm:text-6xl text-slate-400 mb-3 sm:mb-4"></i>
+                <p class="text-slate-600 text-xs sm:text-sm">Add your QR code image<br/>to /public/qr-code.png</p>
               </div>
             </div>
           </div>
           
-          <p class="text-sm text-slate-500">Or download directly:</p>
-          <a href="/image/resume.pdf" download class="inline-flex items-center gap-2 px-6 py-3 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors">
+          <p class="text-xs sm:text-sm text-slate-500">Or download directly:</p>
+          <a href="/image/resume.pdf" download class="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors text-sm sm:text-base w-full sm:w-auto justify-center">
             <i class="fas fa-download"></i>
             <span>Download Resume</span>
           </a>
